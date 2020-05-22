@@ -1,0 +1,15 @@
+name: React CI
+on: [pull_request]
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.16.3
+      - run: yarn install
+      - run: yarn run build --if-present
+      - run: yarn prettier --check --single-quote "src/**/*.js"
+      - run: yarn test
