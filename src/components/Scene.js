@@ -42,10 +42,8 @@ function Start(props) {
   );
 }
 
-class Typing extends React.Component {
-  render() {
-    return (
-      <div className="typing">{this.props.pressKey}</div>
-    );
-  }
+function Typing(props) {
+  return (
+    <div className="typing">{props.pressKey}</div>
+  );
 }
