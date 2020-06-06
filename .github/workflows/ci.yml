@@ -1,5 +1,8 @@
 name: React CI
 on: [pull_request]
+defaults:
+  run:
+    working-directory: ./web
 jobs:
   ci:
     name: Continuous Integration
