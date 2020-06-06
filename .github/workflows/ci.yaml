@@ -14,5 +14,5 @@ jobs:
           node-version: 12.16.3
       - run: yarn install
       - run: yarn run build --if-present
-      - run: yarn prettier --check --single-quote "src/**/*.js"
+      - run: yarn prettier --check --single-quote "web/src/**/*.js"
       - run: yarn test
