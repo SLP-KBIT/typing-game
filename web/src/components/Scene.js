@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export class Scene extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class Scene extends React.Component {
       pressKey: e.key,
     });
 
-    if (e.code === "Space") {
+    if (e.code === 'Space') {
       this.setState({
         isNext: true,
       });
@@ -23,10 +23,10 @@ export class Scene extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress, false);
+    document.addEventListener('keydown', this.handleKeyPress, false);
   }
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress, false);
+    document.removeEventListener('keydown', this.handleKeyPress, false);
   }
 
   render() {
@@ -39,7 +39,7 @@ export class Scene extends React.Component {
 }
 
 function Start(props) {
-  return <div>{"Space To Start"}</div>;
+  return <div>{'Space To Start'}</div>;
 }
 
 function Typing(props) {
