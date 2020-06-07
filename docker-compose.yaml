@@ -5,6 +5,8 @@ services:
     container_name: game-container
     tty: true
     stdin_open: true
+    environment:
+      API_HOST: http://localhost:4567
     build:
       context: ./web
     ports:
