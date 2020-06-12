@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: typing-game-container
+    tty: true
+    stdin_open: true
+    environment:
+      REACT_APP_API_HOST: http://localhost
+      REACT_APP_API_PORT: 4567
+    build:
+      context: ./web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
