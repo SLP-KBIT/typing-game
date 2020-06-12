@@ -29,3 +29,19 @@ services:
     build:
       context: ./api
     restart: always
+    depends_on:
+      - db
+
+  db:
+    container_name: typing-mysql-container
+    image: mysql:8.0.17
+    environment:
+      MYSQL_ROOT_PASSWORD: game
+      MYSQL_USER: game
+      MYSQL_PASSWORD: game
+      MYSQL_DATABASE: game
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
