@@ -14,3 +14,18 @@ services:
       - "3000:3000"
     depends_on:
       - api
+
+  api:
+    container_name: typing-api-container
+    tty: true
+    stdin_open: true
+    environment:
+      HOST: db
+      MYSQL_USER: game
+      MYSQL_PASSWORD: game
+      MYSQL_DATABASE: game
+    ports:
+      - "4567:4567"
+    build:
+      context: ./api
+    restart: always
