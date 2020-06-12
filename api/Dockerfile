@@ -15,3 +15,14 @@ RUN dpkg -i mysql-common_8.0.18-1debian10_amd64.deb \
     mysql-community-client-core_8.0.18-1debian10_amd64.deb \
     mysql-community-client_8.0.18-1debian10_amd64.deb \
     libmysqlclient-dev_8.0.18-1debian10_amd64.deb
+
+WORKDIR /app
+
+COPY Gemfile .
+COPY Gemfile.lock .
+
+RUN bundle install
+
+COPY . .
+
+CMD bundle exec ruby api.rb
