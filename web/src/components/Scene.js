@@ -1,10 +1,12 @@
 import React from 'react';
+import { Typing } from './Typing';
 
 export class Scene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       pressKey: null,
+      keystroke: 0,
       isNext: false,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -13,6 +15,7 @@ export class Scene extends React.Component {
   handleKeyPress(e) {
     this.setState({
       pressKey: e.key,
+      keystroke: this.state.keystroke + 1,
     });
 
     if (e.code === 'Space') {
@@ -23,15 +26,15 @@ export class Scene extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyPress, false);
+    document.addEventListener('keyup', this.handleKeyPress, false);
   }
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyPress, false);
+    document.removeEventListener('keyup', this.handleKeyPress, false);
   }
 
   render() {
     return this.state.isNext ? (
-      <Typing pressKey={this.state.pressKey} />
+      <Typing pressKey={this.state.pressKey} keystroke={this.state.keystroke} />
     ) : (
       <Start />
     );
@@ -40,8 +43,4 @@ export class Scene extends React.Component {
 
 function Start(props) {
   return <div>{'Space To Start'}</div>;
-}
-
-function Typing(props) {
-  return <div className="typing">{props.pressKey}</div>;
 }
