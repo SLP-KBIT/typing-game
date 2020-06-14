@@ -48,7 +48,7 @@ export class Typing extends React.Component {
       uncorrect: '',
       pos: 0,
     });
-    if (this.state.words.length == 0) {
+    if (this.state.words.length === 0) {
       this.fetchWords();
     }
   }
