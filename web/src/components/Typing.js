@@ -7,49 +7,89 @@ export class Typing extends React.Component {
     super(props);
     this.state = {
       uncorrect: '',
-      word: [],
+      words: [],
       pos: 0,
     };
+    this.fetchWords = this.fetchWords.bind(this);
+    this.nextWord = this.nextWord.bind(this);
+    this.judge = this.judge.bind(this);
   }
 
   componentDidMount() {
-    const url = `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/word`;
-
-    axios
-      .get(url)
-      .then((results) => {
-        const data = results.data;
-        const word = data[0].name.split('');
-        this.setState({
-          word: word,
-        });
-      })
-      .catch((data) => {
-        console.log(data);
-      });
+    this.fetchWords();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.keystroke !== prevProps.keystroke) {
-      if (this.props.pressKey === this.state.word[this.state.pos]) {
+      this.judge();
+    }
+  }
+
+  fetchWords() {
+    const url = `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/words`;
+    axios
+      .get(url)
+      .then((res) => {
+        const data = res.data;
+        const words = data.map((word) => word.name.split(''));
         this.setState({
-          uncorrect: '',
-          pos: this.state.pos + 1,
+          words: words,
+          pos: 0,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  nextWord() {
+    this.state.words.shift();
+    this.setState({
+      uncorrect: '',
+      pos: 0,
+    });
+    if (this.state.words.length == 0) {
+      this.fetchWords();
+    }
+  }
+
+  judge() {
+    if (this.iscorrect()) {
+      const new_pos = this.state.pos + 1;
+      if (new_pos === this.state.words[0].length) {
+        this.nextWord();
       } else {
         this.setState({
-          uncorrect: this.props.pressKey,
+          uncorrect: '',
+          pos: new_pos,
         });
       }
+    } else {
+      this.setState({
+        uncorrect: this.props.pressKey,
+      });
     }
+  }
+
+  iscorrect() {
+    return this.props.pressKey === this.state.words[0][this.state.pos];
   }
 
   render() {
     return (
       <div className="typing">
-        <div className="theme">{this.state.word}</div>
-        <p className="correct">{this.state.word.slice(0, this.state.pos)}</p>
+        <p className="correct">
+          {this.state.words.length > 0 &&
+            this.state.words[0].slice(0, this.state.pos)}
+        </p>
         <p className="uncorrect">{this.state.uncorrect}</p>
+        <p className="theme">
+          {this.state.words.length > 0 &&
+            this.state.words[0].slice(
+              this.state.pos,
+              this.state.words[0].length
+            )}
+        </p>
       </div>
     );
   }
