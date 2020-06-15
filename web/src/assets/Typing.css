@@ -1,0 +1,13 @@
+.theme {
+  color: gray;
+}
+
+.correct {
+  display: inline;
+  color: white;
+}
+
+.uncorrect {
+  display: inline;
+  color: red;
+}
