@@ -43,12 +43,13 @@ export class Typing extends React.Component {
   }
 
   nextWord() {
-    this.state.words.shift();
+    const words = this.state.words.slice(1, this.state.words.length);
     this.setState({
+      words: words,
       uncorrect: '',
       pos: 0,
     });
-    if (this.state.words.length === 0) {
+    if (words.length === 0) {
       this.fetchWords();
     }
   }
