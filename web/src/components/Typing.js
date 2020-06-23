@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../assets/Typing.css';
+import { Timer } from './Timer';
 
 export class Typing extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export class Typing extends React.Component {
     this.fetchWords = this.fetchWords.bind(this);
     this.nextWord = this.nextWord.bind(this);
     this.judge = this.judge.bind(this);
+    this.finish = this.finish.bind(this);
   }
 
   componentDidMount() {
@@ -76,21 +78,30 @@ export class Typing extends React.Component {
     return this.props.pressKey === this.state.words[0][this.state.pos];
   }
 
+  finish() {
+    this.props.next();
+  }
+
   render() {
     return (
-      <div className="typing">
-        <p className="correct">
-          {this.state.words.length > 0 &&
-            this.state.words[0].slice(0, this.state.pos)}
-        </p>
-        <p className="uncorrect">{this.state.uncorrect}</p>
-        <p className="theme">
-          {this.state.words.length > 0 &&
-            this.state.words[0].slice(
-              this.state.pos,
-              this.state.words[0].length
-            )}
-        </p>
+      <div className="game">
+        <div className="timer">
+          <Timer finish={this.finish} />
+        </div>
+        <div className="typing">
+          <p className="correct">
+            {this.state.words.length > 0 &&
+              this.state.words[0].slice(0, this.state.pos)}
+          </p>
+          <p className="uncorrect">{this.state.uncorrect}</p>
+          <p className="theme">
+            {this.state.words.length > 0 &&
+              this.state.words[0].slice(
+                this.state.pos,
+                this.state.words[0].length
+              )}
+          </p>
+        </div>
       </div>
     );
   }
