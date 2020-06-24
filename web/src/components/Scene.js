@@ -45,7 +45,7 @@ export class Scene extends React.Component {
             next={this.next}
           />
         );
-      case 2:
+      default:
         return <End />;
     }
   }
@@ -59,10 +59,6 @@ export class Scene extends React.Component {
 // }
 
 class Start extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate() {
     if (this.props.pressKey === ' ') {
       this.props.next();
