@@ -8,9 +8,11 @@ export class Scene extends React.Component {
       pressKey: null,
       keystroke: 0,
       scene: 0,
+      score: 0,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.next = this.next.bind(this);
+    this.addScore = this.addScore.bind(this);
   }
 
   handleKeyPress(e) {
@@ -18,6 +20,12 @@ export class Scene extends React.Component {
       pressKey: e.key,
       keystroke: this.state.keystroke + 1,
     });
+  }
+
+  addScore(point) {
+    this.setState((state) => ({
+      score: state.score + point,
+    }));
   }
 
   next() {
@@ -42,11 +50,12 @@ export class Scene extends React.Component {
           <Typing
             pressKey={this.state.pressKey}
             keystroke={this.state.keystroke}
+            addScore={this.addScore}
             next={this.next}
           />
         );
       default:
-        return <End />;
+        return <End score={this.state.score} />;
     }
   }
 }
@@ -64,5 +73,10 @@ class Start extends React.Component {
 }
 
 function End(props) {
-  return <div>{'End'}</div>;
+  return (
+    <div className="end">
+      <div className="score">{props.score}</div>
+      {'End'}
+    </div>
+  );
 }
