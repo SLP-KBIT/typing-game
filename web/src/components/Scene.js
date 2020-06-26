@@ -51,13 +51,6 @@ export class Scene extends React.Component {
   }
 }
 
-// function Start(props) {
-//   if (props.pressKey === ' ') {
-//     props.next();
-//   }
-//   return <div>{'Space To Start'}</div>;
-// }
-
 class Start extends React.Component {
   componentDidUpdate() {
     if (this.props.pressKey === ' ') {
