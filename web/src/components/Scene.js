@@ -7,9 +7,10 @@ export class Scene extends React.Component {
     this.state = {
       pressKey: null,
       keystroke: 0,
-      isNext: false,
+      scene: 0,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.next = this.next.bind(this);
   }
 
   handleKeyPress(e) {
@@ -17,12 +18,12 @@ export class Scene extends React.Component {
       pressKey: e.key,
       keystroke: this.state.keystroke + 1,
     });
+  }
 
-    if (e.code === 'Space') {
-      this.setState({
-        isNext: true,
-      });
-    }
+  next() {
+    this.setState((state) => ({
+      scene: state.scene + 1,
+    }));
   }
 
   componentDidMount() {
@@ -33,14 +34,35 @@ export class Scene extends React.Component {
   }
 
   render() {
-    return this.state.isNext ? (
-      <Typing pressKey={this.state.pressKey} keystroke={this.state.keystroke} />
-    ) : (
-      <Start />
-    );
+    switch (this.state.scene) {
+      case 0:
+        return <Start pressKey={this.state.pressKey} next={this.next} />;
+      case 1:
+        return (
+          <Typing
+            pressKey={this.state.pressKey}
+            keystroke={this.state.keystroke}
+            next={this.next}
+          />
+        );
+      default:
+        return <End />;
+    }
   }
 }
 
-function Start(props) {
-  return <div>{'Space To Start'}</div>;
+class Start extends React.Component {
+  componentDidUpdate() {
+    if (this.props.pressKey === ' ') {
+      this.props.next();
+    }
+  }
+
+  render() {
+    return <div>{'Space To Start'}</div>;
+  }
+}
+
+function End(props) {
+  return <div>{'End'}</div>;
 }
