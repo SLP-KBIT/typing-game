@@ -4,6 +4,7 @@ GEM
     json (2.3.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.3)
     rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
@@ -20,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  mysql2
   sinatra
 
 BUNDLED WITH
