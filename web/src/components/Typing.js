@@ -61,6 +61,7 @@ export class Typing extends React.Component {
       const new_pos = this.state.pos + 1;
       if (new_pos === this.state.words[0].length) {
         this.nextWord();
+        this.props.addScore(new_pos);
       } else {
         this.setState({
           uncorrect: '',
